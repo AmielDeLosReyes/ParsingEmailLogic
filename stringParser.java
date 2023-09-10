@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class Main {
@@ -10,8 +9,11 @@ public class Main {
 
         String str3 = "First Name: Amiel\nLast Name: De Los Reyes\nLDAP: ADELO71\nEmail Address: adelo71@safeway.com\nRequest Type: Add\nAcceptance: Yes\nDevelopment: Yes\nProduction: Yes\nOMS Admin (All Roles): Yes\nOMS MF Builder: Yes\nTesting: Yes\nAno pa: Yes";
 
+        String parsedEmail = "**AUTO-GENERATED - DO NOT REPLY TO THIS E-MAIL, THE MAILBOX IS NOT MONITORED.\nDear Service Delivery - Offer Management\nPlease complete the pending task TASK326123 for the service Add/ModifyRemove user in OMS for all requested environments (see request details).\nFirst Name: Amiel\nLast Name: De Los Reyes\nLDAP: ADELO71\nEmail Address: adelo71@safeway.com\nRequest Type: Add\nEnvironments: Production, QA, Development\nRoles: Admin, MF Read Only, SC Builder";
+
+        String str4 = parsedEmail.substring(parsedEmail.indexOf("First Name: "));
         // split the string into semicolons and new lines
-        String[] s = str3.split("[:\n]");
+        String[] s = str4.split("[:\n]");
 
         // put the key-value pair result into a linked hash map
         LinkedHashMap<String, String> result = new LinkedHashMap<String, String>();
@@ -38,6 +40,10 @@ public class Main {
 
                     case "Email Address":
                         s[i] = "email";
+                        break;
+
+                    case "Roles":
+                        s[i] = "roles";
                         break;
                 }
 
