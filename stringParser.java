@@ -4,6 +4,8 @@ import java.util.LinkedHashMap;
 public class Main {
     public static void main(String[] args) {
 
+        // PARSING EMAIL CODE
+
         // hardcoded string
         String str2 = "First Name: Amiel\nLast Name: De Los Reyes\nLDAP: ADELO71\nEmail Address: adelo71@safeway.com\nRequest Type: Add\nAcceptance: Yes\nDevelopment: Yes\nOMS Admin (All Roles): Yes\nOMS MF Builder: Yes";
 
@@ -60,5 +62,44 @@ public class Main {
 
         System.out.println("The result set is: \n" + result);
 
+        System.out.println();
+        System.out.println("First Name is " + result.get("first_name"));
+        System.out.println("Last Name is " + result.get("last_name"));
+        System.out.println("LDAP is " + result.get("user_id"));
+        System.out.println("Email is " + result.get("email"));
+        System.out.println("Request Type is " + result.get("Request Type"));
+        System.out.println("Environments is " + result.get("Environments"));
+
+        // INSERTING TO DATABASE CODE
+        String firstName = result.get("first_name");
+        String lastName = result.get("last_name");
+        String LDAP = result.get("user_id");
+        String email = result.get("email");
+        String requestType = result.get("Request Type");
+        String environments = result.get("Environments");
+        String roles = result.get("roles");
+
+        // split the roles
+        String[] rolesArray = roles.split(",");
+
+        // add double-quotations to the roles for formatting
+        for (int i = 0; i < rolesArray.length; i++) {
+            rolesArray[i] = rolesArray[i].trim();
+            rolesArray[i] = "\"" + rolesArray[i] + "\"";
+        }
+
+        // convert roles array into a single string
+        String rolesConverted = String.join(",", rolesArray);
+//        System.out.print(j);
+
+        System.out.println("Roles are " + rolesConverted);
+
+
+        // @Query("INSERT INTO users (user_id, create_ts, create_user_id, email, first_name, last_name, preference, roles, solr_query_update, user_id) VALUES (LDAP, dateof(now()), 'sysusr', email, firstName, lastName, null, roles, null, dateof(now()), 'sysusr');
+
+        //  @Query("INSERT INTO users (user_id, create_ts, create_user_id, email, first_name, last_name, preference, roles, solr_query_update, user_id) VALUES (?1, dateof(now()), 'sysusr', ?2, ?3, ?4, null, ?5, null, dateof(now()), 'sysusr');
+        // void insertUser(String LDAP, String email, String firstName, String lastName, String roles)
+
     }
+
 }
