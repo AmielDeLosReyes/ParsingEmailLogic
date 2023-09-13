@@ -79,8 +79,32 @@ public class Main {
         String environments = result.get("Environments");
         String roles = result.get("roles");
 
+        // split the environments
+        String[] environmentsArray = environments.split(",");
+
         // split the roles
         String[] rolesArray = roles.split(",");
+
+        // check each environments and insert the user there.
+        for (int i = 0; i < environmentsArray.length; i++) {
+            String trimmedString = environmentsArray[i].trim();
+
+            if(trimmedString.equals("Acceptance")) {
+                System.out.println("Do this in Acceptance.");
+            }
+
+            if(trimmedString.equals("QA")) {
+                System.out.println("Do this in QA.");
+            }
+
+            if(trimmedString.equals("Development")) {
+                System.out.println("Do this in Development.");
+            }
+
+            if(trimmedString.equals("Production")) {
+                System.out.println("Do this in Production.");
+            }
+        }
 
         // add double-quotations to the roles for formatting
         for (int i = 0; i < rolesArray.length; i++) {
@@ -94,12 +118,26 @@ public class Main {
 
         System.out.println("Roles are " + rolesConverted);
 
+        switch(requestType) {
+            case "Add":
+                System.out.println("We are adding a user to the database");
+                System.out.println("@Query(\"INSERT INTO users (user_id, create_ts, create_user_id, email, first_name, last_name, preference, roles, solr_query_update, user_id) VALUES (LDAP, dateof(now()), 'sysusr', email, firstName, lastName, null, roles, null, dateof(now()), 'sysusr');");
+                break;
+
+            case "Modify":
+                System.out.println("Modify Roles Query");
+                break;
+
+            case "Remove":
+                System.out.println("Remove Roles Query");
+                break;
+        }
+
 
         // @Query("INSERT INTO users (user_id, create_ts, create_user_id, email, first_name, last_name, preference, roles, solr_query_update, user_id) VALUES (LDAP, dateof(now()), 'sysusr', email, firstName, lastName, null, roles, null, dateof(now()), 'sysusr');
 
         //  @Query("INSERT INTO users (user_id, create_ts, create_user_id, email, first_name, last_name, preference, roles, solr_query_update, user_id) VALUES (?1, dateof(now()), 'sysusr', ?2, ?3, ?4, null, ?5, null, dateof(now()), 'sysusr');
         // void insertUser(String LDAP, String email, String firstName, String lastName, String roles)
-
     }
 
 }
