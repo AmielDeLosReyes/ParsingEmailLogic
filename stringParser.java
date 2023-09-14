@@ -16,6 +16,7 @@ public class Main {
         // start the string where First Name is located
         String str4 = parsedEmail.substring(parsedEmail.indexOf("First Name: "));
 
+
         // split the string into semicolons and new lines
         String[] s = str4.split("[:\n]");
 
@@ -62,10 +63,10 @@ public class Main {
         System.out.println("Environments is " + result.get("Environments"));
 
         // INSERTING TO DATABASE CODE
-        String firstName = result.get("first_name");
-        String lastName = result.get("last_name");
-        String LDAP = result.get("user_id");
-        String email = result.get("email");
+//        String firstName = result.get("first_name");
+//        String lastName = result.get("last_name");
+//        String LDAP = result.get("user_id");
+//        String email = result.get("email");
         String requestType = result.get("Request Type");
         String environments = result.get("Environments");
         String roles = result.get("roles");
@@ -105,23 +106,16 @@ public class Main {
 
         // convert roles array into a single string
         String rolesConverted = String.join(",", rolesArray);
-//        System.out.print(j);
 
         System.out.println("Roles are " + rolesConverted);
 
-        switch(requestType) {
-            case "Add":
+        switch (requestType) {
+            case "Add" -> {
                 System.out.println("We are adding a user to the database");
                 System.out.println("@Query(\"INSERT INTO users (user_id, create_ts, create_user_id, email, first_name, last_name, preference, roles, solr_query_update, user_id) VALUES (LDAP, dateof(now()), 'sysusr', email, firstName, lastName, null, roles, null, dateof(now()), 'sysusr');");
-                break;
-
-            case "Modify":
-                System.out.println("Modify Roles Query");
-                break;
-
-            case "Remove":
-                System.out.println("Remove Roles Query");
-                break;
+            }
+            case "Modify" -> System.out.println("Modify Roles Query");
+            case "Remove" -> System.out.println("Remove Roles Query");
         }
 
 
@@ -130,5 +124,4 @@ public class Main {
         //  @Query("INSERT INTO users (user_id, create_ts, create_user_id, email, first_name, last_name, preference, roles, solr_query_update, user_id) VALUES (?1, dateof(now()), 'sysusr', ?2, ?3, ?4, null, ?5, null, dateof(now()), 'sysusr');
         // void insertUser(String LDAP, String email, String firstName, String lastName, String roles)
     }
-
 }
