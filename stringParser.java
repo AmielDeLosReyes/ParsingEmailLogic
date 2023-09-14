@@ -11,11 +11,14 @@ public class Main {
 
         String str3 = "First Name: Amiel\nLast Name: De Los Reyes\nLDAP: ADELO71\nEmail Address: adelo71@safeway.com\nRequest Type: Add\nAcceptance: Yes\nDevelopment: Yes\nProduction: Yes\nOMS Admin (All Roles): Yes\nOMS MF Builder: Yes\nTesting: Yes\nAno pa: Yes";
 
-        String parsedEmail = "**AUTO-GENERATED - DO NOT REPLY TO THIS E-MAIL, THE MAILBOX IS NOT MONITORED.\nDear Service Delivery - Offer Management\nPlease complete the pending task TASK326123 for the service Add/ModifyRemove user in OMS for all requested environments (see request details).\nFirst Name: Amiel\nLast Name: De Los Reyes\nLDAP: ADELO71\nEmail Address: adelo71@safeway.com\nRequest Type: Add\nEnvironments: Production, QA, Development\nRoles: Admin, MF Read Only, SC Builder";
+        String parsedEmail = "**AUTO-GENERATED - DO NOT REPLY TO THIS E-MAIL, THE MAILBOX IS NOT MONITORED.\nDear Service Delivery - Offer Management\nPlease complete the pending task TASK326123 for the service Add/ModifyRemove user in OMS for all requested environments (see request details).\nFirst Name: Amiel\nLast Name: De Los Reyes\nLDAP ID: ADELO71\nEmail Address: adelo71@safeway.com\nRequest Type: Add\nSelect environment(s) needed: Production, QA, Development\nSelect your role(s): Admin, MF Read Only, SC Builder";
 
+        // start the string where First Name is located
         String str4 = parsedEmail.substring(parsedEmail.indexOf("First Name: "));
+
         // split the string into semicolons and new lines
         String[] s = str4.split("[:\n]");
+
 
         // put the key-value pair result into a linked hash map
         LinkedHashMap<String, String> result = new LinkedHashMap<String, String>();
@@ -24,33 +27,21 @@ public class Main {
         ArrayList<String> fields = new ArrayList<>();
         ArrayList<String> values = new ArrayList<>();
 
-        // odd index are key, even index are value
+        //
         for(int i = 0; i < s.length; i++) {
+            // if index is even, then it is the fields
             if(i % 2 == 0) {
-                switch(s[i]) {
-                    case "First Name":
-                        s[i] = "first_name";
-                        break;
-
-                    case "Last Name":
-                        s[i] = "last_name";
-                        break;
-
-                    case "LDAP":
-                        s[i] = "user_id";
-                        break;
-
-                    case "Email Address":
-                        s[i] = "email";
-                        break;
-
-                    case "Roles":
-                        s[i] = "roles";
-                        break;
+                switch (s[i]) {
+                    case "First Name" -> s[i] = "first_name";
+                    case "Last Name" -> s[i] = "last_name";
+                    case "LDAP ID" -> s[i] = "user_id";
+                    case "Email Address" -> s[i] = "email";
+                    case "Select environment(s) needed" -> s[i] = "Environments";
+                    case "Select your role(s)" -> s[i] = "roles";
                 }
 
                 fields.add(s[i]);
-            }else {
+            } else { // else it is the values
                 values.add(s[i].trim());
             }
         }
