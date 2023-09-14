@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -44,9 +41,33 @@ public class Main {
         List<String> listKeys = new ArrayList<String>(result.keySet());
 
         System.out.println("List contains:");
-        for (String value : listValues) {
-            System.out.println(value);
+
+        // Get the values in respective order.
+        for(int i = 0; i < listValues.size(); i++) {
+
+            System.out.println("Index " + i + " is " + listValues.get(i));
+//            if (i == 6) {
+//                String[] rolesArray = listValues.get(i).split(",");
+//                for(int j = 0; j < rolesArray.length; i++) {
+//                    rolesArray[j] = rolesArray[j].trim();
+//                    rolesArray[j] = "\"" + rolesArray[j] + "\"";
+//                    System.out.println("Index " + i + " is " + listValues.get(j));
+//                }
+//            }
         }
+
+        String rolesLastElement = listValues.get(listValues.size() - 1);
+
+        System.out.println(rolesLastElement);
+        String[] rolesArray = rolesLastElement.split(",");
+        for(int i = 0; i < rolesArray.length; i++) {
+            rolesArray[i] = rolesArray[i].trim();
+            rolesArray[i] = "\"" + rolesArray[i] + "\"";
+        }
+
+        System.out.println(Arrays.toString(rolesArray));
+        String rolesConverted = String.join(",", rolesArray);
+        System.out.println("Roles are " + rolesConverted);
 
     }
 }
